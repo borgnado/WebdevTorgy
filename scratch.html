@@ -1,0 +1,148 @@
+<!--
+    Spencer Torgersen
+    IS 201 Britsch
+    Apr 9 2026
+    SCRATCH PAGE — no Bootstrap
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spencer's Scratch Page – Fly Fishing</title>
+    <!-- Custom from-scratch stylesheet (required) -->
+    <link rel="stylesheet" href="../scratch-style.css">
+</head>
+<body id="top">
+
+    <!-- ── NAV (back to professional pages) ── -->
+    <div id="scratch-nav">
+        <a href="Index.HTML">Home</a>
+        <a href="HTML/Resume.HTML">Résumé</a>
+        <a href="HTML/aboutme.html">About Me</a>
+        <a href="app.html" id="app-link">🎮 Fishing Trivia App</a>
+    </div>
+
+    <!-- ── HERO ── -->
+    <div id="hero">
+        <h1>Fly Fishing</h1>
+        <p id="tagline">A passion on the water</p>
+    </div>
+
+    <!-- ── MAIN CONTENT ── -->
+    <div id="main-content">
+
+        <div id="intro-section">
+            <h2>Why I Love Fly Fishing</h2>
+            <p>
+                There is something about standing in a cold mountain river, reading the water, and presenting a hand-tied fly to a wild trout that no other sport can match. It combines patience, skill, and an intimate connection with nature.
+            </p>
+            <!-- Image (not from Bootstrap theme) -->
+            <img src="../Images/fish.jpeg" alt="Spencer holding a trout on a fly fishing trip" class="content-img">
+        </div>
+
+        <div id="gear-section">
+            <h2>Gear Basics</h2>
+            <p>Getting started doesn't have to be expensive. Here's what you need:</p>
+
+            <!-- Ordered list with embedded unordered list (required) -->
+            <ol>
+                <li>Rod &amp; Reel
+                    <ul>
+                        <li>5-weight rod is the most versatile</li>
+                        <li>Pair with a matching reel and floating line</li>
+                    </ul>
+                </li>
+                <li>Flies
+                    <ul>
+                        <li>Dry flies (float on surface)</li>
+                        <li>Nymphs (fish below surface)</li>
+                        <li>Streamers (mimic baitfish)</li>
+                    </ul>
+                </li>
+                <li>Waders &amp; Boots
+                    <ul>
+                        <li>Felt-sole boots for rocky riverbeds</li>
+                        <li>Breathable waders for warm weather</li>
+                    </ul>
+                </li>
+                <li>Other Essentials
+                    <ul>
+                        <li>Polarized sunglasses (see into the water)</li>
+                        <li>Forceps to remove hooks safely</li>
+                        <li>Fishing license — always!</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <!-- On-page anchor target -->
+        <div id="video-section">
+            <h2 id="video">Watch &amp; Learn</h2>
+            <p>This beginner's guide covers everything from casting to reading the water:</p>
+            <!-- YouTube embed (required) — works once hosted online -->
+            <div class="video-wrapper">
+                <iframe
+                    src="https://www.youtube.com/embed/G_VGbICknCM"
+                    title="Fly Fishing for Beginners"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+
+     <!-- Tableau embed (required — live & interactive) -->
+<div id="tableau-section">
+    <h2>Fishing Data: River and Lake Stocking Schedule</h2>
+    <p>This Tableau visualization shows the stocking schedule for rivers and lakes across the United States:</p>
+    <div class='tableauPlaceholder' id='viz1776150065172' style='position: relative'>
+        <noscript>
+            <a href='#'>
+                <img alt='Overview' src='https://public.tableau.com/static/images/NC/NC67H9MY6/1_rss.png' style='border: none' />
+            </a>
+        </noscript>
+        <object class='tableauViz' style='display:none;'>
+            <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+            <param name='embed_code_version' value='3' />
+            <param name='path' value='shared/NC67H9MY6' />
+            <param name='toolbar' value='yes' />
+            <param name='static_image' value='https://public.tableau.com/static/images/NC/NC67H9MY6/1.png' />
+            <param name='animate_transition' value='yes' />
+            <param name='display_static_image' value='yes' />
+            <param name='display_spinner' value='yes' />
+            <param name='display_overlay' value='yes' />
+            <param name='display_count' value='yes' />
+            <param name='language' value='en-US' />
+        </object>
+    </div>
+    <script type='text/javascript'>
+        var divElement = document.getElementById('viz1776150065172');
+        var vizElement = divElement.getElementsByTagName('object')[0];
+        if (divElement.offsetWidth > 800) {
+            vizElement.style.width = '100%';
+            vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px';
+        } else if (divElement.offsetWidth > 500) {
+            vizElement.style.width = '100%';
+            vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px';
+        } else {
+            vizElement.style.width = '100%';
+            vizElement.style.height = '1677px';
+        }
+        var scriptElement = document.createElement('script');
+        scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+        vizElement.parentNode.insertBefore(scriptElement, vizElement);
+    </script>
+</div>
+
+        <!-- Back to top anchor link (required) -->
+        <div id="footer-nav">
+            <a href="#top">↑ Back to Top</a>
+            <a href="#video">Jump to Video</a>
+            <a href="app.html">🎮 Fishing Trivia</a>
+        </div>
+
+    </div><!-- end #main-content -->
+
+</body>
+</html>

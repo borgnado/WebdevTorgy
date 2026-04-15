@@ -1,0 +1,372 @@
+<!--
+    Spencer Torgersen
+    IS 201 Britsch
+    Apr 9 2026
+    WEB APP PAGE — AI-assisted fly fishing trivia game
+    All styles, HTML, and JS in one page (per requirements)
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fly Fishing Trivia – Spencer Torgersen</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: #f1faee;
+        }
+
+        #back-link {
+            align-self: flex-start;
+            color: #a8dadc;
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+        #back-link:hover { text-decoration: underline; }
+
+        #game-container {
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(168,218,220,0.3);
+            border-radius: 12px;
+            padding: 36px;
+            max-width: 640px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: #a8dadc;
+            margin-bottom: 6px;
+        }
+
+        #subtitle {
+            color: #ccc;
+            font-size: 0.9rem;
+            margin-bottom: 28px;
+        }
+
+        #score-bar {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #a8dadc;
+            margin-bottom: 20px;
+            padding: 8px 12px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 6px;
+        }
+
+        #progress-bar-outer {
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+        #progress-bar-inner {
+            height: 100%;
+            background: #a8dadc;
+            border-radius: 3px;
+            transition: width 0.4s ease;
+            width: 0%;
+        }
+
+        #question-text {
+            font-size: 1.15rem;
+            line-height: 1.5;
+            margin-bottom: 24px;
+            min-height: 60px;
+            color: #f1faee;
+        }
+
+        .answer-btn {
+            display: block;
+            width: 100%;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(168,218,220,0.4);
+            color: #f1faee;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            text-align: left;
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .answer-btn:hover:not(:disabled) {
+            background: rgba(168,218,220,0.15);
+            border-color: #a8dadc;
+        }
+        .answer-btn.correct {
+            background: rgba(42,157,44,0.35);
+            border-color: #2a9d2c;
+            color: #b7f3b8;
+            font-weight: bold;
+        }
+        .answer-btn.wrong {
+            background: rgba(200,50,50,0.35);
+            border-color: #e63946;
+            color: #ffb3b3;
+        }
+        .answer-btn:disabled { cursor: default; }
+
+        #feedback {
+            min-height: 48px;
+            font-size: 0.9rem;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 8px;
+            margin-bottom: 16px;
+            color: #f1faee;
+            background: transparent;
+            transition: background 0.3s;
+        }
+        #feedback.show-correct { background: rgba(42,157,44,0.2); }
+        #feedback.show-wrong   { background: rgba(200,50,50,0.2); }
+
+        #next-btn, #restart-btn {
+            background: #457b9d;
+            border: none;
+            color: #fff;
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: background 0.2s;
+        }
+        #next-btn:hover, #restart-btn:hover { background: #1d3557; }
+
+        #result-panel {
+            display: none;
+        }
+
+        #result-score {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #a8dadc;
+            margin: 12px 0;
+        }
+
+        #result-message {
+            color: #ccc;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        #streak-display {
+            font-size: 0.8rem;
+            color: #a8dadc;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="scratch.html" id="back-link">← Back to Scratch Page</a>
+
+    <div id="game-container">
+        <h1>🎣 Fly Fishing Trivia</h1>
+        <p id="subtitle">10 questions · Test your angling knowledge</p>
+
+        <div id="score-bar">
+            <span>Score: <strong id="score-display">0</strong></span>
+            <span id="streak-display">Streak: 0 🔥</span>
+            <span>Q <strong id="q-num">1</strong> / 10</span>
+        </div>
+        <div id="progress-bar-outer"><div id="progress-bar-inner"></div></div>
+
+        <div id="quiz-panel">
+            <p id="question-text"></p>
+            <div id="answers"></div>
+            <div id="feedback"></div>
+            <button id="next-btn" style="display:none;">Next Question →</button>
+        </div>
+
+        <div id="result-panel">
+            <p style="font-size:1.1rem;">You finished!</p>
+            <div id="result-score"></div>
+            <p id="result-message"></p>
+            <button id="restart-btn">Play Again</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                q: "What does 'matching the hatch' mean in fly fishing?",
+                a: ["Choosing a fly that looks like what fish are currently eating", "Finding a place where fish are spawning", "Using two flies at the same time", "Fishing at dawn and dusk only"],
+                correct: 0,
+                fact: "Insects 'hatch' (emerge) at certain times, and trout key in on them. Picking the right fly pattern is the key to success!"
+            },
+            {
+                q: "A '5-weight' fly rod refers to what property?",
+                a: ["Its length in feet", "The weight of the rod in ounces", "The line weight it's designed to cast", "The max fish weight it can handle"],
+                correct: 2,
+                fact: "Fly rods are rated by line weight (1–14). A 5-weight is the most popular all-around trout rod."
+            },
+            {
+                q: "What is a 'dry fly'?",
+                a: ["A fly made without water-resistant material", "A fly that floats on the water's surface", "A fly used only in dry weather", "A fly tied with no hooks"],
+                correct: 1,
+                fact: "Dry flies imitate adult insects floating on the surface. Watching a trout rise to take a dry fly is one of the most exciting moments in fishing!"
+            },
+            {
+                q: "Which knot is most commonly used to attach a fly to the tippet?",
+                a: ["Bowline", "Figure-eight", "Improved clinch knot", "Reef knot"],
+                correct: 2,
+                fact: "The improved clinch knot is simple, reliable, and the go-to for connecting hooks and lures to line."
+            },
+            {
+                q: "What is 'tippet' in fly fishing?",
+                a: ["The tip of the fly rod", "A type of dry fly", "The thin section of line connecting leader to fly", "A waterproof hat worn by fly fishers"],
+                correct: 2,
+                fact: "Tippet is the nearly invisible end piece of your leader. It absorbs shock and makes the fly presentation more natural."
+            },
+            {
+                q: "What is 'reading the water'?",
+                a: ["Checking river flow reports online", "Observing the river to find where fish likely hold", "Using a fish finder device", "Measuring water temperature"],
+                correct: 1,
+                fact: "Fish hold in predictable spots — behind rocks, in eddies, along current seams. Learning to 'read' these is a core skill."
+            },
+            {
+                q: "Which fish is NOT a common fly fishing target?",
+                a: ["Brown trout", "Rainbow trout", "Bass", "Catfish"],
+                correct: 3,
+                fact: "Catfish are bottom feeders and rarely caught on flies. Trout, bass, and salmon are among the most popular fly fishing targets."
+            },
+            {
+                q: "What does 'catch and release' mean?",
+                a: ["Using barbless hooks only", "Catching fish and returning them to the water alive", "A fishing tournament format", "Releasing your fishing license requirements"],
+                correct: 1,
+                fact: "Catch and release helps preserve fish populations. Wet your hands before handling a fish to protect its slime coat!"
+            },
+            {
+                q: "What is a 'nymph' in fly fishing?",
+                a: ["A fairy-tale creature used as a lure mascot", "An underwater larval stage of an insect, imitated by flies", "A surface popper lure", "A type of spinning reel"],
+                correct: 1,
+                fact: "Nymphs are immature aquatic insects — the stage before they hatch. Nymph flies fished below the surface account for the majority of a trout's diet."
+            },
+            {
+                q: "What does polarized sunglasses help with in fly fishing?",
+                a: ["Protecting from UV rays only", "Reducing glare so you can see fish underwater", "Magnifying distant objects", "Identifying insect hatches"],
+                correct: 1,
+                fact: "Polarized lenses cut surface glare dramatically, letting you spot fish, rocks, and structure you'd otherwise miss entirely."
+            }
+        ];
+
+        let current = 0, score = 0, streak = 0, answered = false;
+
+        const qText   = document.getElementById('question-text');
+        const aDiv    = document.getElementById('answers');
+        const feedback= document.getElementById('feedback');
+        const nextBtn = document.getElementById('next-btn');
+        const qNum    = document.getElementById('q-num');
+        const scoreD  = document.getElementById('score-display');
+        const streakD = document.getElementById('streak-display');
+        const progress= document.getElementById('progress-bar-inner');
+        const quizPanel  = document.getElementById('quiz-panel');
+        const resultPanel= document.getElementById('result-panel');
+        const resultScore= document.getElementById('result-score');
+        const resultMsg  = document.getElementById('result-message');
+        const restartBtn = document.getElementById('restart-btn');
+
+        function shuffle(arr) {
+            return [...arr].sort(() => Math.random() - 0.5);
+        }
+
+        function loadQuestion() {
+            answered = false;
+            const q = questions[current];
+            qText.textContent = q.q;
+            qNum.textContent  = current + 1;
+            progress.style.width = (current / questions.length * 100) + '%';
+            feedback.textContent = '';
+            feedback.className   = '';
+            nextBtn.style.display = 'none';
+            aDiv.innerHTML = '';
+
+            // Build answer buttons
+            q.a.forEach((text, idx) => {
+                const btn = document.createElement('button');
+                btn.className   = 'answer-btn';
+                btn.textContent = text;
+                btn.addEventListener('click', () => handleAnswer(btn, idx));
+                aDiv.appendChild(btn);
+            });
+        }
+
+        function handleAnswer(btn, idx) {
+            if (answered) return;
+            answered = true;
+            const q = questions[current];
+            const allBtns = aDiv.querySelectorAll('.answer-btn');
+            allBtns.forEach(b => b.disabled = true);
+
+            if (idx === q.correct) {
+                btn.classList.add('correct');
+                score++;
+                streak++;
+                scoreD.textContent  = score;
+                streakD.textContent = `Streak: ${streak} 🔥`;
+                feedback.textContent = '✅ Correct! ' + q.fact;
+                feedback.className   = 'show-correct';
+            } else {
+                btn.classList.add('wrong');
+                allBtns[q.correct].classList.add('correct');
+                streak = 0;
+                streakD.textContent = 'Streak: 0';
+                feedback.textContent = '❌ Not quite. ' + q.fact;
+                feedback.className   = 'show-wrong';
+            }
+            nextBtn.style.display = 'inline-block';
+        }
+
+        nextBtn.addEventListener('click', () => {
+            current++;
+            if (current < questions.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        });
+
+        function showResult() {
+            progress.style.width = '100%';
+            quizPanel.style.display  = 'none';
+            resultPanel.style.display = 'block';
+            resultScore.textContent = score + ' / ' + questions.length;
+            const pct = score / questions.length;
+            if      (pct === 1)   resultMsg.textContent = '🏆 Perfect score! You\'re a fly fishing master!';
+            else if (pct >= 0.8)  resultMsg.textContent = '🎣 Great job! You really know your stuff.';
+            else if (pct >= 0.6)  resultMsg.textContent = '👍 Solid effort! Time for more time on the water.';
+            else if (pct >= 0.4)  resultMsg.textContent = '📚 Not bad — keep learning and you\'ll get there!';
+            else                  resultMsg.textContent = '🐟 Keep practicing! The fish will wait for you.';
+        }
+
+        restartBtn.addEventListener('click', () => {
+            current = 0; score = 0; streak = 0;
+            scoreD.textContent  = 0;
+            streakD.textContent = 'Streak: 0';
+            quizPanel.style.display   = 'block';
+            resultPanel.style.display = 'none';
+            loadQuestion();
+        });
+
+        // Start!
+        loadQuestion();
+    </script>
+
+</body>
+</html>

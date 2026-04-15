@@ -1,0 +1,209 @@
+/* scratch-style.css
+   Spencer Torgersen — IS 201
+   Custom from-scratch stylesheet
+   Satisfies: 4+ style defs, font color, font family, 3+ divs for layout
+*/
+
+/* ── 1. Global reset & font family ── */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Georgia, 'Times New Roman', serif;   /* font family */
+    color: #1a1a2e;                                   /* font color */
+    background-color: #c8e6f5;                        /* custom background color */
+    background-image: url('Images/browntrout.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+/* ── 2. Navigation div ── */
+#scratch-nav {
+    background-color: #1a1a2e;
+    padding: 12px 24px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+#scratch-nav a {
+    color: #a8dadc;                /* font color: nav links */
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;  /* font family: nav */
+    font-size: 0.9rem;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+}
+
+#scratch-nav a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+#app-link {
+    margin-left: auto;
+    background-color: #457b9d;
+    color: #fff !important;
+    padding: 6px 14px;
+    border-radius: 4px;
+}
+
+/* ── 3. Hero div ── */
+#hero {
+    text-align: center;
+    padding: 80px 20px 60px;
+    background-color: rgba(26, 26, 46, 0.75);
+    color: #f1faee;
+}
+
+#hero h1 {
+    font-family: Georgia, serif;   /* font family: headings */
+    font-size: 3rem;
+    color: #a8dadc;                /* font color: heading */
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+}
+
+#tagline {
+    font-size: 1.2rem;
+    color: #f1faee;               /* font color: tagline */
+    font-style: italic;
+}
+
+/* ── 4. Main content div ── */
+#main-content {
+    max-width: 860px;
+    margin: 40px auto;
+    background-color: rgba(255, 255, 255, 0.93);
+    border-radius: 8px;
+    padding: 40px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+/* ── 5. Intro section div ── */
+#intro-section {
+    margin-bottom: 36px;
+    border-left: 4px solid #457b9d;
+    padding-left: 16px;
+}
+
+/* ── 6. Gear section div ── */
+#gear-section {
+    margin-bottom: 36px;
+    background-color: #eef7fb;
+    padding: 20px 24px;
+    border-radius: 6px;
+}
+
+/* ── 7. Video section div ── */
+#video-section {
+    margin-bottom: 36px;
+}
+
+/* ── 8. Tableau section div ── */
+#tableau-section {
+    margin-bottom: 36px;
+    padding: 20px 24px;
+    background-color: #f0f4f8;
+    border-radius: 6px;
+    border: 1px solid #cdd8e3;
+}
+
+/* ── 9. Headings ── */
+h2 {
+    font-family: Georgia, serif;
+    color: #1d3557;               /* font color: section headings */
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+    border-bottom: 2px solid #a8dadc;
+    padding-bottom: 4px;
+}
+
+/* ── 10. Lists ── */
+ol, ul {
+    padding-left: 1.4rem;
+    line-height: 1.9;
+}
+
+ol > li {
+    font-weight: bold;
+    color: #1d3557;               /* font color: ordered list items */
+    margin-bottom: 6px;
+}
+
+ol > li > ul > li {
+    font-weight: normal;
+    color: #333;                  /* font color: nested list items */
+}
+
+/* ── 11. Content image ── */
+.content-img {
+    width: 100%;
+    max-width: 500px;
+    display: block;
+    margin: 16px auto;
+    border-radius: 6px;
+    border: 3px solid #457b9d;
+}
+
+/* ── 12. YouTube embed wrapper ── */
+.video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    height: 0;
+    overflow: hidden;
+    border-radius: 6px;
+    margin: 16px 0;
+    background: #000;
+}
+
+.video-wrapper iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* ── 13. Footer nav div ── */
+#footer-nav {
+    text-align: center;
+    padding: 24px 0 8px;
+    border-top: 1px solid #cdd8e3;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#footer-nav a {
+    color: #457b9d;
+    text-decoration: none;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+}
+
+#footer-nav a:hover {
+    text-decoration: underline;
+    color: #1d3557;
+}
+
+/* ── 14. Tableau note ── */
+.tableau-note {
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 10px;
+}
+
+/* ── 15. Paragraph spacing ── */
+p {
+    line-height: 1.7;
+    margin-bottom: 12px;
+}
